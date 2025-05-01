@@ -1,0 +1,451 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  background: #fff;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark {
+  background: #181A1B !important;
+  color: #fff;
+}
+
+body.dark .App {
+  background: #181A1B;
+  color: #fff;
+}
+
+body.dark .quiz-container,
+body.dark .results-container {
+  background: #23272A;
+  border-color: #FFD600;
+  box-shadow: 0 4px 16px rgba(255, 214, 0, 0.10);
+}
+
+body.dark h1, body.dark h2, body.dark h3 {
+  color: #FF3C2E;
+}
+
+body.dark .company-logo {
+  filter: brightness(0) saturate(100%) invert(16%) sepia(99%) saturate(7492%) hue-rotate(-6deg) brightness(101%) contrast(108%);
+}
+
+body.dark .option {
+  background: #23272A;
+  border: 2px solid #00CFFF;
+  color: #FFD600;
+}
+
+body.dark .option:hover {
+  background: #00CFFF22;
+  border: 2px solid #FFD600;
+}
+
+body.dark .option label {
+  color: #FFD600;
+}
+
+body.dark .option input[type="radio"] {
+  accent-color: #FFD600;
+}
+
+body.dark .progress-bar-container {
+  background: #23272A;
+  border: 2px solid #00CFFF;
+  box-shadow: 0 2px 8px #00CFFF44;
+}
+
+body.dark .progress-bar {
+  background: linear-gradient(90deg, #43a047 0%, #b2ff59 100%);
+  box-shadow: 0 2px 8px #43a04744;
+}
+
+body.dark .breakdown-card {
+  background: #23272A;
+  border-left: 10px solid #FF3C2E;
+  border-right: 6px solid #00CFFF;
+  color: #FFD600;
+}
+
+body.dark .breakdown-factor {
+  color: #FF3C2E;
+}
+
+body.dark .breakdown-score-label {
+  color: #00CFFF;
+}
+
+body.dark .breakdown-bar-bg {
+  background: #181A1B;
+  border: 2px solid #FFD600;
+}
+
+body.dark .breakdown-bar {
+  background: linear-gradient(90deg, #43a047 0%, #b2ff59 100%);
+  box-shadow: 0 2px 8px #43a04744;
+}
+
+body.dark .nav-button {
+  background: #181A1B;
+  color: #FF3C2E;
+  border: 3px solid #FF3C2E;
+}
+
+body.dark .nav-button:disabled {
+  background: #23272A;
+  color: #888;
+  border: 3px solid #23272A;
+}
+
+body.dark .nav-button:not(:disabled):hover {
+  background: #FF3C2E;
+  color: #fff;
+  border: 3px solid #FF3C2E;
+}
+
+body.dark .retake-button {
+  background: #FF3C2E;
+  color: #fff;
+  border: 4px solid #FF3C2E;
+}
+
+body.dark .retake-button:hover {
+  background: #181A1B;
+  color: #FF3C2E;
+  border: 4px solid #FF3C2E;
+}
+
+body.dark .dark-toggle {
+  background: #181A1B;
+  color: #FF3C2E;
+  border: 3px solid #FF3C2E;
+}
+
+body.dark .dark-toggle:hover {
+  background: #FF3C2E;
+  color: #fff;
+  border: 3px solid #FF3C2E;
+}
+
+.App {
+  text-align: left;
+  max-width: 600px;
+  margin: 3rem auto 0 auto;
+  padding: 3rem 2.5rem 3rem 2.5rem;
+  font-family: 'Press Start 2P', monospace;
+  color: #222;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(255, 60, 46, 0.10), 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.company-logo {
+  display: block;
+  margin: 0 auto 2.5rem auto;
+  max-width: 140px;
+  height: auto;
+}
+
+.quiz-container,
+.results-container {
+  background: #fff;
+  padding: 2.5rem 2rem 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(255, 60, 46, 0.08);
+  margin-left: 0;
+  margin-right: auto;
+  margin-bottom: 2.5rem;
+  border: 4px solid #FF3C2E;
+  font-family: 'Press Start 2P', monospace;
+}
+
+h1 {
+  font-family: 'Press Start 2P', monospace;
+  color: #FF3C2E;
+  letter-spacing: 1px;
+  font-size: 2.2rem;
+  margin-bottom: 2.2rem;
+  text-align: center;
+}
+
+h2 {
+  font-family: 'Press Start 2P', monospace;
+  color: #FF3C2E;
+  font-size: 1.3rem;
+  margin-bottom: 1.2rem;
+}
+
+h3 {
+  font-family: 'Press Start 2P', monospace;
+  color: #FF3C2E;
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+}
+
+.quiz-container p,
+.results-container p,
+.option label {
+  font-family: 'IBM Plex Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 1.1rem;
+  color: #222;
+  margin-bottom: 1.2rem;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin: 2.2rem 0 2.2rem 0;
+}
+
+.option {
+  padding: 1.1rem 1.2rem;
+  border: 2px solid #FFD600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s;
+  background: #fff;
+  font-family: 'IBM Plex Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 1.1rem;
+}
+
+.option:hover {
+  background-color: #FF3C2E22;
+  border: 2px solid #FF3C2E;
+}
+
+.option label {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.option input[type="radio"] {
+  width: 22px;
+  height: 22px;
+  accent-color: #FF3C2E;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 22px;
+  background: #FFD600;
+  border-radius: 8px;
+  margin: 2.2rem 0 1.2rem 0;
+  overflow: hidden;
+  border: 2px solid #FF3C2E;
+  box-shadow: 0 2px 8px #FFD60044;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+  background: linear-gradient(90deg, #43a047 0%, #b2ff59 100%);
+  box-shadow: 0 2px 8px #43a04744;
+}
+
+.score {
+  font-size: 2.8rem;
+  color: #FF3C2E;
+  margin: 1.5rem 0 1.2rem 0;
+  text-align: center;
+}
+
+.score-message {
+  font-size: 1.1rem;
+  color: #222;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.breakdown-cards {
+  margin: 2.5rem 0 2.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.breakdown-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(255, 60, 46, 0.07), 0 1.5px 4px rgba(0,0,0,0.04);
+  padding: 1.5rem 2rem 1.3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+  border-left: 10px solid #FF3C2E;
+  border-right: 6px solid #FFD600;
+  font-family: 'Press Start 2P', monospace;
+}
+
+.breakdown-card:hover {
+  box-shadow: 0 4px 16px rgba(255, 60, 46, 0.13), 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.breakdown-label {
+  display: flex;
+  align-items: center;
+  gap: 1.3rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.7rem;
+}
+
+.breakdown-icon {
+  font-size: 1.7rem;
+  margin-right: 0.3rem;
+}
+
+.breakdown-factor {
+  font-weight: bold;
+  min-width: 180px;
+  letter-spacing: 0.01em;
+  color: #FF3C2E;
+  font-size: 1.1rem;
+}
+
+.breakdown-score-label {
+  margin-left: auto;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #00CFFF;
+}
+
+.breakdown-bar-bg {
+  width: 100%;
+  height: 22px;
+  background: #f3f3f3;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1.5px solid #ddd;
+  box-shadow: 0 1px 3px #0000000a;
+}
+
+.breakdown-bar {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.8s cubic-bezier(.4,2,.6,1);
+  background: linear-gradient(90deg, #43a047 0%, #b2ff59 100%);
+  box-shadow: 0 2px 8px #43a04744;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  justify-content: center;
+}
+
+.nav-button {
+  background: #fff;
+  color: #FF3C2E;
+  border: 3px solid #FF3C2E;
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-family: 'Press Start 2P', monospace;
+  font-weight: 700;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  box-shadow: 2px 2px 0 #222;
+}
+
+.nav-button:disabled {
+  background-color: #f1f1f1;
+  color: #b0b0b0;
+  border: 3px solid #b0b0b0;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.nav-button:not(:disabled):hover {
+  background: #FF3C2E;
+  color: #fff;
+  border: 3px solid #FF3C2E;
+}
+
+.retake-button {
+  background: #FF3C2E;
+  color: #fff;
+  border: 4px solid #FF3C2E;
+  padding: 1.3rem 3.5rem;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  font-family: 'Press Start 2P', monospace;
+  font-weight: 700;
+  margin: 3rem auto 0 auto;
+  box-shadow: 3px 3px 0 #222;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s, transform 0.1s;
+  letter-spacing: 1px;
+  display: block;
+}
+
+.retake-button:hover {
+  background: #fff;
+  color: #FF3C2E;
+  border: 4px solid #FF3C2E;
+  transform: translateY(-2px) scale(1.03);
+}
+
+.dark-toggle {
+  position: absolute;
+  top: 2rem;
+  right: 2.5rem;
+  background: #fff;
+  color: #FF3C2E;
+  border: 3px solid #FF3C2E;
+  border-radius: 8px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 2px 2px 0 #222;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+.dark-toggle:hover {
+  background: #FF3C2E;
+  color: #fff;
+  border: 3px solid #FF3C2E;
+}
