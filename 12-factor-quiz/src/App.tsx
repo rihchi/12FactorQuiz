@@ -4,70 +4,58 @@ import companyLogo from './codingscape_logo.jpeg';
 import companyLogoDark from './codingscape_logo_dark.gif';
 
 interface Question {
-  factor: string;
   question: string;
 }
 
 const questions: Question[] = [
-  {
-    factor: 'I. Codebase',
-    question: 'How confident are you that each app has a single, well-managed codebase with clear ownership and version control?'
-  },
-  {
-    factor: 'II. Dependencies',
-    question: 'When onboarding a new team member, are app dependencies instantly clear and reproducible without manual steps?'
-  },
-  {
-    factor: 'III. Config',
-    question: 'Can your team deploy to different environments without ever touching the codebase?'
-  },
-  {
-    factor: 'IV. Backing Services',
-    question: 'How easy is it for your team to switch out a database, cache, or API service without rewriting code?'
-  },
-  {
-    factor: 'V. Build/Release/Run',
-    question: 'Can you rebuild and redeploy your app without worrying about runtime behaviors leaking into the build?'
-  },
-  {
-    factor: 'VI. Processes',
-    question: 'Would your system survive a sudden scale-up or failover event without requiring shared state or patchwork fixes?'
-  },
-  {
-    factor: 'VII. Port Binding',
-    question: 'Do your services cleanly bind to ports and run independently, or are they entangled with infrastructure details?'
-  },
-  {
-    factor: 'VIII. Concurrency',
-    question: 'Can your team scale workers, web servers, and other processes independently without intervention?'
-  },
-  {
-    factor: 'IX. Disposability',
-    question: 'When your services restart (intentionally or not), do they recover cleanly without ops intervention?'
-  },
-  {
-    factor: 'X. Dev/Prod Parity',
-    question: 'How often do bugs appear in production that "never showed up locally"?'
-  },
-  {
-    factor: 'XI. Logs',
-    question: 'Can your team trace issues across systems in real time, or are logs trapped on individual machines?'
-  },
-  {
-    factor: 'XII. Admin Processes',
-    question: 'How easily can your team run one-off tasks like DB migrations or scripts in your production environment?'
-  }
+  { question: 'How confident are you that your codebase is versioned and has clear ownership?' },
+  { question: 'Can a new team member set up the project with a single command?' },
+  { question: 'Are all dependencies declared in a single manifest file?' },
+  { question: 'Is dependency installation always reproducible and automated?' },
+  { question: 'Is configuration always stored outside the codebase?' },
+  { question: 'Can you deploy to any environment without changing code?' },
+  { question: 'Can you swap out databases or APIs without code changes?' },
+  { question: 'Are all backing services (DB, cache, etc.) treated as attached resources?' },
+  { question: 'Are build, release, and run stages clearly separated?' },
+  { question: 'Can you rebuild and redeploy without worrying about runtime leaks?' },
+  { question: 'Are your services stateless and horizontally scalable?' },
+  { question: 'Can your app survive a sudden scale-up or failover event?' },
+  { question: 'Do your services cleanly bind to ports and run independently?' },
+  { question: 'Can you run your app locally without relying on external web servers?' },
+  { question: 'Can you scale web servers and workers independently?' },
+  { question: 'Is process concurrency (web, worker, etc.) handled via the process model?' },
+  { question: 'Do your services start and stop quickly with graceful shutdowns?' },
+  { question: 'Is your dev environment nearly identical to production?' },
+  { question: 'Can you trace logs and metrics across all services in real time?' },
+  { question: 'Can you run one-off admin tasks in the same environment as the app?' },
 ];
 
 const options: string[] = ['0 - Not at all', '1 - Somewhat', '2 - Partially', '3 - Mostly', '4 - Fully'];
 
 type Answer = number | null;
 
+const factorMappings = [
+  { factor: 'I. Codebase', questions: [0, 1] },
+  { factor: 'II. Dependencies', questions: [2, 3] },
+  { factor: 'III. Config', questions: [4, 5] },
+  { factor: 'IV. Backing Services', questions: [6, 7] },
+  { factor: 'V. Build, Release, Run', questions: [8, 9] },
+  { factor: 'VI. Processes', questions: [10, 11] },
+  { factor: 'VII. Port Binding', questions: [12, 13] },
+  { factor: 'VIII. Concurrency', questions: [14, 15] },
+  { factor: 'IX. Disposability', questions: [16] },
+  { factor: 'X. Dev/Prod Parity', questions: [17] },
+  { factor: 'XI. Logs', questions: [18] },
+  { factor: 'XII. Admin Processes', questions: [19] },
+];
+
 function App() {
   const [answers, setAnswers] = useState<Answer[]>(Array(questions.length).fill(null));
   const [current, setCurrent] = useState<number>(0);
   const [completed, setCompleted] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [emailSent, setEmailSent] = useState(false);
 
   useEffect(() => {
     if (darkMode) {
@@ -102,13 +90,14 @@ function App() {
         aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
         onClick={() => setDarkMode((d) => !d)}
       >
-        {darkMode ? '🌙 Dark' : '☀️ Light'}
+        {darkMode ? '🌙' : '☀️'}
+        <span className="toggle-label"> {darkMode ? 'Dark' : 'Light'}</span>
       </button>
       <img src={darkMode ? companyLogoDark : companyLogo} alt="Company Logo" className="company-logo" />
       <h1>12-Factor Readiness Assessment</h1>
       {!completed ? (
         <div>
-          <h2>{questions[current].factor}</h2>
+          <h2>{current + 1}</h2>
           <p>{questions[current].question}</p>
           {options.map((opt, idx) => (
             <div key={idx}>
@@ -165,14 +154,15 @@ function App() {
 
           <h3>Factor-by-Factor Breakdown</h3>
           <div className="breakdown-cards">
-            {questions.map((q, idx) => {
-              const score = answers[idx] ?? 0;
+            {factorMappings.map((mapping, idx) => {
+              const scores = mapping.questions.map(qIdx => answers[qIdx] ?? 0);
+              const avg = scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
               let color = '#43a047'; // green
               let icon = '🏆';
-              if (score < 2) {
+              if (avg < 2) {
                 color = '#e53935'; // red
                 icon = '❌';
-              } else if (score < 4) {
+              } else if (avg < 4) {
                 color = '#fbc02d'; // orange
                 icon = '⚠️';
               }
@@ -180,18 +170,50 @@ function App() {
                 <div className="breakdown-card" key={idx}>
                   <div className="breakdown-label">
                     <span className="breakdown-icon" style={{ color }}>{icon}</span>
-                    <span className="breakdown-factor">{q.factor}</span>
-                    <span className="breakdown-score-label">{options[score]}</span>
+                    <span className="breakdown-factor">{mapping.factor}</span>
+                    <span className="breakdown-score-label">{scores.length ? `${avg.toFixed(1)} / 4` : 'N/A'}</span>
                   </div>
                   <div className="breakdown-bar-bg">
                     <div
                       className="breakdown-bar"
-                      style={{ width: `${(score / 4) * 100}%`, background: color }}
+                      style={{ width: `${(avg / 4) * 100}%`, background: color }}
                     />
                   </div>
                 </div>
               );
             })}
+          </div>
+
+          <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
+            {!emailSent ? (
+              <form
+                onSubmit={e => {
+                  e.preventDefault();
+                  setEmailSent(true);
+                }}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+              >
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={userEmail}
+                  onChange={e => setUserEmail(e.target.value)}
+                  required
+                  className="email-input"
+                />
+                <button
+                  type="submit"
+                  className="retake-button"
+                  style={{ width: 'min(90vw, 320px)' }}
+                >
+                  Email results to yourself
+                </button>
+              </form>
+            ) : (
+              <p style={{ color: '#43a047', fontWeight: 700, fontSize: '1.1rem' }}>
+                Results will be sent to your email shortly!
+              </p>
+            )}
           </div>
 
           <button className="retake-button" onClick={resetQuiz}>Retake Quiz</button>
