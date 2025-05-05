@@ -55,7 +55,7 @@ function App() {
   const [completed, setCompleted] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState('');
-  const [emailSent, setEmailSent] = useState(false);
+  const [emailSuccess, setEmailSuccess] = useState(false);
 
   useEffect(() => {
     if (darkMode) {
@@ -81,6 +81,19 @@ function App() {
     setAnswers(Array(questions.length).fill(null));
     setCurrent(0);
     setCompleted(false);
+  };
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setEmailSuccess(true);
+    // Store email and timestamp in SheetDB
+    fetch('https://sheetdb.io/api/v1/h1sci2oa288jn', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: { email: userEmail, timestamp: new Date().toISOString() } }),
+    });
+    setUserEmail('');
+    setTimeout(() => setEmailSuccess(false), 2000);
   };
 
   return (
@@ -185,35 +198,31 @@ function App() {
           </div>
 
           <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
-            {!emailSent ? (
-              <form
-                onSubmit={e => {
-                  e.preventDefault();
-                  setEmailSent(true);
-                }}
-                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+            <form
+              onSubmit={handleEmailSubmit}
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+            >
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={userEmail}
+                onChange={e => setUserEmail(e.target.value)}
+                required
+                className="email-input"
+              />
+              <button
+                type="submit"
+                className="retake-button"
+                style={{ width: 'min(90vw, 320px)' }}
               >
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={userEmail}
-                  onChange={e => setUserEmail(e.target.value)}
-                  required
-                  className="email-input"
-                />
-                <button
-                  type="submit"
-                  className="retake-button"
-                  style={{ width: 'min(90vw, 320px)' }}
-                >
-                  Email results to yourself
-                </button>
-              </form>
-            ) : (
-              <p style={{ color: '#43a047', fontWeight: 700, fontSize: '1.1rem' }}>
-                Results will be sent to your email shortly!
-              </p>
-            )}
+                Email results to yourself
+              </button>
+              {emailSuccess && (
+                <p style={{ color: '#43a047', fontWeight: 700, fontSize: '1.1rem', margin: 0 }}>
+                  Results will be sent to your email shortly!
+                </p>
+              )}
+            </form>
           </div>
 
           <button className="retake-button" onClick={resetQuiz}>Retake Quiz</button>
