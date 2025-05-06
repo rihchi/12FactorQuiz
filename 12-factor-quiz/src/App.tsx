@@ -8,26 +8,26 @@ interface Question {
 }
 
 const questions: Question[] = [
-  { question: 'How confident are you that your codebase is versioned and has clear ownership?' },
-  { question: 'Can a new team member set up the project with a single command?' },
-  { question: 'Are all dependencies declared in a single manifest file?' },
-  { question: 'Is dependency installation always reproducible and automated?' },
-  { question: 'Is configuration always stored outside the codebase?' },
-  { question: 'Can you deploy to any environment without changing code?' },
-  { question: 'Can you swap out databases or APIs without code changes?' },
-  { question: 'Are all backing services (DB, cache, etc.) treated as attached resources?' },
-  { question: 'Are build, release, and run stages clearly separated?' },
-  { question: 'Can you rebuild and redeploy without worrying about runtime leaks?' },
-  { question: 'Are your services stateless and horizontally scalable?' },
-  { question: 'Can your app survive a sudden scale-up or failover event?' },
-  { question: 'Do your services cleanly bind to ports and run independently?' },
-  { question: 'Can you run your app locally without relying on external web servers?' },
-  { question: 'Can you scale web servers and workers independently?' },
-  { question: 'Is process concurrency (web, worker, etc.) handled via the process model?' },
-  { question: 'Do your services start and stop quickly with graceful shutdowns?' },
-  { question: 'Is your dev environment nearly identical to production?' },
-  { question: 'Can you trace logs and metrics across all services in real time?' },
-  { question: 'Can you run one-off admin tasks in the same environment as the app?' },
+  { question: 'Do you know exactly where the official, up-to-date code for each of your company’s apps or services is stored?' },
+  { question: 'If someone leaves, is it obvious who owns each codebase?' },
+  { question: 'Is it easy to see all the software your app depends on, in one place?' },
+  { question: 'Can a new developer get all dependencies set up with one command?' },
+  { question: 'Are settings like passwords and API keys kept out of your code?' },
+  { question: 'Can you move your app to a new environment (like staging or production) without changing the code?' },
+  { question: 'If you needed to switch databases or APIs, could you do it without rewriting your app?' },
+  { question: 'Are all external services (like storage, email, or cache) treated as replaceable add-ons?' },
+  { question: 'Is it clear when your team is building, releasing, or running the app?' },
+  { question: 'Can you rebuild and redeploy your app without worrying about hidden changes from previous runs?' },
+  { question: 'If you had to double your app’s capacity today, could you do it without rewriting code?' },
+  { question: 'Does your app avoid storing user data or state in memory between requests?' },
+  { question: 'Can your app run on any port, or does it require a specific server setup?' },
+  { question: 'Could you run your app locally without needing a special web server or IT help?' },
+  { question: 'If you needed more workers or web servers, could you add them independently?' },
+  { question: 'Does your app handle multiple tasks at once by running more processes, not by adding complexity to the code?' },
+  { question: 'If your app crashes or restarts, does it recover quickly and cleanly?' },
+  { question: 'Is your development environment set up to be as close to production as possible?' },
+  { question: 'Can you see all your app’s logs in one place, in real time?' },
+  { question: 'If you need to run a one-off task (like a database migration), can you do it safely in production?' },
 ];
 
 const options: string[] = ['0 - Not at all', '1 - Somewhat', '2 - Partially', '3 - Mostly', '4 - Fully'];
@@ -47,6 +47,21 @@ const factorMappings = [
   { factor: 'X. Dev/Prod Parity', questions: [17] },
   { factor: 'XI. Logs', questions: [18] },
   { factor: 'XII. Admin Processes', questions: [19] },
+];
+
+const factorBlurbs = [
+  'Clear codebase ownership is essential for auditability, compliance, and rapid response to change.',
+  'Undeclared dependencies create onboarding friction and hidden risk.',
+  'Mismanaged config leads to costly outages and compliance headaches.',
+  'Tightly coupled services slow innovation and increase vendor lock-in.',
+  'Build/release/run confusion causes unpredictable deployments and downtime.',
+  'Stateless, scalable processes are the foundation of resilience and agility.',
+  'Port binding enables true cloud-native, scalable architectures.',
+  'Concurrency gaps limit your ability to scale and respond to demand.',
+  'Disposable systems reduce recovery time and operational risk.',
+  'Dev/prod parity prevents "it worked on my machine" disasters.',
+  'Centralized, actionable logs are critical for security and incident response.',
+  'Easy admin processes enable safe, rapid change and compliance.'
 ];
 
 function App() {
@@ -98,6 +113,17 @@ function App() {
 
   return (
     <div className={`App${darkMode ? ' dark' : ''}`}>
+      {/* Executive-level intro */}
+      {!completed && (
+        <div style={{ marginBottom: '2.5rem', textAlign: 'center' }}>
+          <h2 style={{ color: '#FF3C2E', fontSize: '1.2rem', marginBottom: '1rem' }}>
+            Is your software delivery as modern and resilient as you think?
+          </h2>
+          <p style={{ fontSize: '1.05rem', color: darkMode ? '#fff' : '#222', maxWidth: 520, margin: '0 auto' }}>
+            This quick assessment uncovers hidden risks and opportunities in your engineering organization—insights that often escape even the most seasoned leaders.
+          </p>
+        </div>
+      )}
       <button
         className="dark-toggle"
         aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
@@ -161,6 +187,16 @@ function App() {
         </div>
       ) : (
         <div>
+          {/* Results callout */}
+          <div style={{ marginBottom: '2.5rem', textAlign: 'center' }}>
+            <h2 style={{ color: '#FF3C2E', fontSize: '1.2rem', marginBottom: '1rem' }}>
+              Most CIOs and VPs are surprised by what they learn here.
+            </h2>
+            <p style={{ fontSize: '1.05rem', color: darkMode ? '#fff' : '#222', maxWidth: 520, margin: '0 auto' }}>
+              Gaps in these areas can mean higher risk, slower innovation, and missed opportunities.<br />
+              Want a confidential, expert review of your results? <a href="#" style={{ color: '#43a047', textDecoration: 'underline', fontWeight: 700 }}>Book a Discovery Call</a>
+            </p>
+          </div>
           <h2>Your 12-Factor Readiness Score</h2>
           <h1>{getScore()}%</h1>
           <p>{getScore() > 75 ? 'Strong foundation, let\'s build on it.' : 'Some gaps exist, worth exploring in a discovery session.'}</p>
@@ -185,6 +221,9 @@ function App() {
                     <span className="breakdown-icon" style={{ color }}>{icon}</span>
                     <span className="breakdown-factor">{mapping.factor}</span>
                     <span className="breakdown-score-label">{scores.length ? `${avg.toFixed(1)} / 4` : 'N/A'}</span>
+                  </div>
+                  <div style={{ fontSize: '0.95em', color: darkMode ? '#fff' : '#222', marginBottom: 8, marginTop: -4 }}>
+                    <em>{factorBlurbs[idx]}</em>
                   </div>
                   <div className="breakdown-bar-bg">
                     <div
