@@ -197,10 +197,10 @@ function App() {
             })}
           </div>
 
-          <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
+          <div className="email-form">
             <form
               onSubmit={handleEmailSubmit}
-              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+              style={{ width: '100%' }}
             >
               <input
                 type="email"
@@ -213,12 +213,12 @@ function App() {
               <button
                 type="submit"
                 className="retake-button"
-                style={{ width: 'min(90vw, 320px)' }}
+                style={{ width: '100%' }}
               >
                 Email results to yourself
               </button>
               {emailSuccess && (
-                <p style={{ color: '#43a047', fontWeight: 700, fontSize: '1.1rem', margin: 0 }}>
+                <p className="email-success">
                   Results will be sent to your email shortly!
                 </p>
               )}
