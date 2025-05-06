@@ -8,7 +8,7 @@ interface Question {
 }
 
 const questions: Question[] = [
-  { question: 'Do you know exactly where the official, up-to-date code for each of your company’s apps or services is stored?' },
+  { question: 'Do you know exactly where the official, up-to-date code for each of your company\'s apps or services is stored?' },
   { question: 'If someone leaves, is it obvious who owns each codebase?' },
   { question: 'Is it easy to see all the software your app depends on, in one place?' },
   { question: 'Can a new developer get all dependencies set up with one command?' },
@@ -18,7 +18,7 @@ const questions: Question[] = [
   { question: 'Are all external services (like storage, email, or cache) treated as replaceable add-ons?' },
   { question: 'Is it clear when your team is building, releasing, or running the app?' },
   { question: 'Can you rebuild and redeploy your app without worrying about hidden changes from previous runs?' },
-  { question: 'If you had to double your app’s capacity today, could you do it without rewriting code?' },
+  { question: 'If you had to double your app\'s capacity today, could you do it without rewriting code?' },
   { question: 'Does your app avoid storing user data or state in memory between requests?' },
   { question: 'Can your app run on any port, or does it require a specific server setup?' },
   { question: 'Could you run your app locally without needing a special web server or IT help?' },
@@ -26,7 +26,7 @@ const questions: Question[] = [
   { question: 'Does your app handle multiple tasks at once by running more processes, not by adding complexity to the code?' },
   { question: 'If your app crashes or restarts, does it recover quickly and cleanly?' },
   { question: 'Is your development environment set up to be as close to production as possible?' },
-  { question: 'Can you see all your app’s logs in one place, in real time?' },
+  { question: 'Can you see all your app\'s logs in one place, in real time?' },
   { question: 'If you need to run a one-off task (like a database migration), can you do it safely in production?' },
 ];
 
@@ -113,17 +113,6 @@ function App() {
 
   return (
     <div className={`App${darkMode ? ' dark' : ''}`}>
-      {/* Executive-level intro */}
-      {!completed && (
-        <div style={{ marginBottom: '2.5rem', textAlign: 'center' }}>
-          <h2 style={{ color: '#FF3C2E', fontSize: '1.2rem', marginBottom: '1rem' }}>
-            Is your software delivery as modern and resilient as you think?
-          </h2>
-          <p style={{ fontSize: '1.05rem', color: darkMode ? '#fff' : '#222', maxWidth: 520, margin: '0 auto' }}>
-            This quick assessment uncovers hidden risks and opportunities in your engineering organization—insights that often escape even the most seasoned leaders.
-          </p>
-        </div>
-      )}
       <button
         className="dark-toggle"
         aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
