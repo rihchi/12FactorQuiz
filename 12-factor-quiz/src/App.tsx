@@ -70,6 +70,7 @@ function App() {
   const [completed, setCompleted] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState('');
+  const [userCompany, setUserCompany] = useState('');
   const [emailSuccess, setEmailSuccess] = useState(false);
 
   useEffect(() => {
@@ -96,18 +97,36 @@ function App() {
     setAnswers(Array(questions.length).fill(null));
     setCurrent(0);
     setCompleted(false);
+    setUserEmail('');
+    setUserCompany('');
   };
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setEmailSuccess(true);
-    // Store email and timestamp in SheetDB
-    fetch('https://sheetdb.io/api/v1/h1sci2oa288jn', {
+    // Prepare data for n8n webhook
+    const payload = {
+      email: userEmail,
+      company: userCompany,
+      timestamp: new Date().toISOString(),
+      score: getScore(),
+      answers,
+      breakdown: factorMappings.map((mapping, idx) => {
+        const scores = mapping.questions.map(qIdx => answers[qIdx] ?? 0);
+        const avg = scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
+        return {
+          factor: mapping.factor,
+          score: avg,
+        };
+      }),
+    };
+    fetch('https://rabenoja.app.n8n.cloud/webhook-test/4b5116ea-b478-44ac-ba36-e16cfa18545b', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: { email: userEmail, timestamp: new Date().toISOString() } }),
+      body: JSON.stringify(payload),
     });
     setUserEmail('');
+    setUserCompany('');
     setTimeout(() => setEmailSuccess(false), 2000);
   };
 
@@ -235,6 +254,14 @@ function App() {
                 placeholder="Enter your email"
                 value={userEmail}
                 onChange={e => setUserEmail(e.target.value)}
+                required
+                className="email-input"
+              />
+              <input
+                type="text"
+                placeholder="Enter your company"
+                value={userCompany}
+                onChange={e => setUserCompany(e.target.value)}
                 required
                 className="email-input"
               />
